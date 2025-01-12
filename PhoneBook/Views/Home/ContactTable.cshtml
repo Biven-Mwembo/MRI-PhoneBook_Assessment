@@ -1,0 +1,107 @@
+﻿@model List<PhoneBook.Models.Contacts>
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Email</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody id="userContainer" class="user-item">
+        @foreach (var contact in Model)
+        {
+            <tr class="items" style="cursor: pointer; height: 40px;" onclick="location.href='@Url.Action("UpdateContact", new { id = contact.Id })';">
+                <td class="min-id">
+                    <img src="~/images/user-pro.png" />
+                </td>
+
+                <td class="username">
+                    <a href="@Url.Action("UpdateContact", new { id = contact.Id })">@contact.Name</a>
+                </td>
+                <td class="number">
+                    <a href="@Url.Action("UpdateContact", new { id = contact.Id })">(@contact._code) @contact.PhoneNumber</a>
+                </td>
+                <td class="email">
+                    <a href="@Url.Action("UpdateContact", new { id = contact.Id })">@contact.EmailAddress</a>
+                </td>
+                <td class="actions">
+                    <a asp-action="UpdateContact" asp-route-id="@contact.Id" class="btn btn-light btn-sm">
+                        <img width="20" height="20" src="https://img.icons8.com/fluency-systems-regular/50/1A1A1A/edit--v1.png" alt="edit--v1" />
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@contact.Id" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="setDeleteId(@contact.Id); event.stopPropagation(); event.preventDefault();">
+                        <img width="20" height="20" src="https://img.icons8.com/material-rounded/24/waste.png" alt="waste" />
+                    </a>
+
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="~/images/wow.gif" class="emoji" />
+                <h5>Are you sure you want to delete that?</h5>
+                <input type="hidden" id="contactIdToDelete" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+             //  function to Confirm Delete Action
+
+
+
+    // Store the contact ID to delete
+    function setDeleteId(id) {
+        console.log("Setting delete ID:", id);
+        const contactIdInput = document.getElementById('contactIdToDelete');
+        if (contactIdInput) {
+            contactIdInput.value = id;
+            console.log("ID set successfully.");
+        } else {
+            console.error("Modal input element not found.");
+        }
+    }
+
+    // Handle the delete confirmation
+    document.addEventListener('DOMContentLoaded', function () {
+        const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+
+        if (confirmDeleteButton) {
+            confirmDeleteButton.addEventListener('click', function () {
+                const contactId = document.getElementById('contactIdToDelete').value;
+                if (contactId) {
+                    console.log("Deleting contact with ID:", contactId);
+                    // Redirect to the delete action
+                    window.location.href = `/Home/Delete/${contactId}`;
+                }
+            });
+        }
+    });
+</script>
+
+
+
+

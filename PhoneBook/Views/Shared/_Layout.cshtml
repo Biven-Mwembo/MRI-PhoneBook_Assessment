@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PhoneBook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PhoneBook.styles.css" asp-append-version="true" />
+</head>
+<body>
+   
+
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="~/Images/phone_logo.png" class="logo" alt="Phone Logo" /> <h3>KOLSA</h3>
+        </div>
+     <div class="side-items">
+      <a asp-controller="Home" asp-action="Index" class="active"><img src="~/Images/user (2).png" width="20" height="20" />Contacts</a>
+        <a asp-controller="Home" asp-action="Deleted"><img width="20" height="20" src="~/Images/bin.png" alt="waste" />Deleted Contacts</a>
+
+        </div>
+    </div>
+ 
+    <div class="content">
+        <div class="container-options">
+            <a asp-controller="Home" asp-action="Index" class="add-btn-opt">
+                <img width="30" height="30" src="~/Images/profile (2).png" alt="plus-math" /> 
+            </a>
+            <a asp-controller="Home" asp-action="Deleted" class="add-filter-opt">
+                <img width="28" height="28" src="~/Images/Bin.gif" alt="plus-math" />
+            </a>
+        </div>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+
+    //  function to search contacts
+        function searchContacts() {
+            var searchTerm = document.getElementById("searchInput").value;
+
+            // Perform an AJAX request to the SearchContacts action
+            fetch(`/Home/SearchContacts?searchTerm=${searchTerm}`)
+                .then(response => response.text())
+                .then(html => {
+                    // Replace the table with the updated HTML
+                    document.querySelector(".Table").innerHTML = html;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+
+
+
+             //  function to Confirm Delete Action
+      
+
+
+   
+
+
+        
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

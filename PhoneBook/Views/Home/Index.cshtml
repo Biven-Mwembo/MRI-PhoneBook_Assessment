@@ -1,0 +1,44 @@
+﻿@model PhoneBook.ViewModels.ContactViewModels
+
+@{
+    ViewData["Title"] = "Home Page";
+    var _users = Model.Users ?? new List<PhoneBook.Models.Contacts>();
+}
+@if (TempData["Alert"] != null)
+{
+    <img src="~/images/alert.png" />
+    <div class="alert alert-danger" role="alert">
+        @TempData["Alert"]
+    </div>
+}
+
+<div class="" data-aos="fade-up">
+    <h4 class="Title">Contacts</h4>
+
+    <div class="search-container">
+        <!-- Search Bar -->
+        <input type="text" id="searchInput" class="search" placeholder="Search Contact by Name or Phone Number" onkeyup="searchContacts()" />
+    </div>
+
+
+    <br /> <br />
+    <div class="container">
+    <a asp-controller="Home" asp-action="Add" class="add-btn">
+        <img width="20" height="20" src="~/Images/add.png" alt="plus-math" /> Add
+    </a>
+        <a asp-controller="Home" asp-action="SortContacts" class="add-filter">
+        <img width="20" height="20" src="~/Images/filter.png" alt="plus-math" /> Filter
+    </a>
+</div>
+    
+        <div class="Table">
+            @await Html.PartialAsync("ContactTable", _users)
+        </div>
+
+
+  
+</div>
+
+
+
+

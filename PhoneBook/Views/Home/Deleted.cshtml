@@ -1,0 +1,86 @@
+﻿@model IEnumerable<PhoneBook.Models.DeletedContact>
+
+<h4>Deleted Contacts</h4>
+
+<div class="res-table">
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Email Address</th>
+            <th>Deleted At</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var contact in Model)
+        {
+            <tr>
+                <td class="min-id"><img src="~/images/user-pro.png" /></td>
+                <td class="res-name">@contact.Name</td>
+                <td class="res-num">@contact.PhoneNumber</td>
+                <td class="res-email">@contact.EmailAddress</td>
+                <td class="time">@contact.DeletedAt.ToString("g")</td>
+                <td>
+                    <a href="#" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#restoreModal" onclick="setRestoreId(@contact.Id);">
+                        <img width="20" height="20" src="~/Images/restore.png" alt="restore" />
+                        Restore
+                    </a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+</div>
+
+
+<div class="modal fade" id="restoreModal" tabindex="-1" aria-labelledby="restoreModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="restoreModalLabel">Confirm Restore</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="~/images/restore.gif" />
+                <h5>Are you sure you want to restore this contact?</h5>
+                <input type="hidden" id="contactIdToRestore" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="confirmRestoreButton">Restore</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Store the contact ID to restore
+    function setRestoreId(id) {
+        const contactIdInput = document.getElementById('contactIdToRestore');
+        if (contactIdInput) {
+            contactIdInput.value = id;
+        }
+    }
+
+    // Handle the restore confirmation
+    document.addEventListener('DOMContentLoaded', function () {
+        const confirmRestoreButton = document.getElementById('confirmRestoreButton');
+
+        if (confirmRestoreButton) {
+            confirmRestoreButton.addEventListener('click', function () {
+                const contactId = document.getElementById('contactIdToRestore').value;
+                if (contactId) {
+                    // Redirect to the restore action
+                    window.location.href = `/Home/Restore/${contactId}`;
+                }
+            });
+        }
+    });
+</script>
+

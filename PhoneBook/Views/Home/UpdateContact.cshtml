@@ -1,0 +1,41 @@
+﻿@model PhoneBook.Models.Contacts
+
+@{
+   
+    ViewData["Title"] = "Update Profile";
+}
+@if (TempData["Alert"] != null)
+{
+    <img src="~/images/alert.png" />
+    <div class="alert alert-danger" role="alert">
+        @TempData["Alert"]
+    </div>
+}
+
+<h2>Update Contact</h2>
+
+<div class="container">
+    <form asp-action="UpdateContact" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PhoneNumber" class="control-label"></label>
+            <input asp-for="PhoneNumber" class="form-control" autocomplete="off" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EmailAddress" class="control-label"></label>
+            <input asp-for="EmailAddress" class="form-control" autocomplete="off" />
+            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </div>
+       
+    </form>
+</div>
+
+

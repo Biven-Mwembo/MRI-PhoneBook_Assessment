@@ -1,0 +1,60 @@
+﻿@model PhoneBook.Models.Contacts
+@{
+    ViewData["Title"] = "Add Contact";
+}
+<h4>Add New Contact</h4>
+
+@if(TempData["Alert"] !=null){
+    <img src="~/images/alert.png" />
+    <div class="alert alert-danger" role="alert">
+        @TempData["Alert"]
+    </div>
+}
+
+
+<div class="container">
+   
+        <div class="col">
+        <form asp-action="Add" method="post">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">First Name <h6>*</h6></label>
+                <input asp-for="Name" class="form-control" placeholder="Enter first name" required autocomplete="off" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label">Phone Number <h6>*</h6></label>
+                <div class="d-flex">
+                    <select asp-for="_code"  class="code">
+                        <option  value="+1">+1</option>
+                        <option value="+27">+27</option>
+                        <option value="+243">+243</option>
+                        <option value="+260">+260</option>
+                      
+                    </select>
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="Enter phone number" required autocomplete="off" />
+                </div>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label">Email Address</label>
+                <input asp-for="EmailAddress" class="form-control" placeholder="Enter email address" autocomplete="off" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
